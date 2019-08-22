@@ -1,8 +1,7 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 import Styled from "styled-components";
-import Movie from "./Movie";
-import * as Yup from "yup";
+
 
 const FormDiv = Styled.div `
     display: flex;

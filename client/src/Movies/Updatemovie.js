@@ -50,7 +50,7 @@ const Button = Styled.button `
 
 const InitialMovie = {
     title: '',
-    director: "",
+    director: '',
     metascore: '',
     stars: []
 
@@ -58,10 +58,10 @@ const InitialMovie = {
 
 const UpdateMovie = props => {
     const [update, setUpdate] = useState(InitialMovie)
-    console.log(props)
+
     useEffect(() => {
         if (props.match.params.id) setUpdate(props.movie);
-    }, [props.movie, props.match.params.id])
+    },[props.movie])
 
     const handleChange = event => {
         setUpdate({...update, [event.target.name]: event.target.value});
@@ -69,9 +69,11 @@ const UpdateMovie = props => {
 
     const handleSubmit = event => {
         event.preventDefault();
+        console.log("update", update)
         axios
             .put(`http://localhost:5000/api/movies/${update.id}`, update)
             .then(res => {
+                console.log(res)
                 props.history.push("/")
                 setUpdate(InitialMovie)
                 })

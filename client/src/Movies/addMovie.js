@@ -100,7 +100,7 @@ const AddMovie = (props, {errors, touched}) => {
                 <InputText type = "text" name = "metascore" placeholder="Metascore" onChange = {handleChange} value ={addMovie.metascore}/>
                 {addMovie.stars.map((star, index) => <TextArea key ={index} type = "text" name = "stars" placeholder="Stars" onChange = {event => handleStarsChange(index, event)} value ={addMovie.stars[index]}/> )}
                 <Button onClick = {AddActors}>Add Actor</Button>
-                <Button type="submit">Update</Button>
+                <Button type="submit">Add Movie</Button>
 
 
             </Form>

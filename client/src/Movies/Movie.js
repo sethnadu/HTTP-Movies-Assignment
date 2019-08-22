@@ -64,6 +64,12 @@ export default class Movie extends React.Component {
     font-size: 1rem;
     width: 58px;
     height: 30px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: green;
+      color: white;
+    }
     
     `
 
@@ -77,6 +83,12 @@ export default class Movie extends React.Component {
     font-size: 1rem;
     width: 65px;
     height: 30px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: green;
+      color: white;
+    }
     
     `
 

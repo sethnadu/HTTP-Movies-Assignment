@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import MovieCard from "./MovieCard";
+import Styled from 'styled-components'
 export default class Movie extends React.Component {
   constructor(props) {
     super(props);
@@ -52,6 +53,35 @@ export default class Movie extends React.Component {
 
 
   render() {
+
+    const EditButton = Styled.button `
+    position: absolute;
+    top: 25px;
+    right: 95px;
+    border: 1px solid grey;
+    padding: 5px 10px;
+    background-color: lightseagreen;
+    font-size: 1rem;
+    width: 58px;
+    height: 30px;
+    
+    `
+
+    const DeleteButton = Styled.button `
+    position: absolute;
+    top: 25px;
+    right: 165px;
+    border: 1px solid grey;
+    padding: 5px 10px;
+    background-color: lightseagreen;
+    font-size: 1rem;
+    width: 65px;
+    height: 30px;
+    
+    `
+
+
+
     console.log(this.props.movie)
     if (!this.props.movie) {
       return <div>Loading movie information...</div>;
@@ -63,8 +93,8 @@ export default class Movie extends React.Component {
         <div className="save-button" onClick={this.saveMovie}>
           Save
         </div>
-      <button onClick ={() => this.props.history.push(`/update-movie/${this.props.movie.id}`)}>Edit</button>
-      <button onClick = {this.deleteMovie}>Delete</button>
+      <EditButton onClick ={() => this.props.history.push(`/update-movie/${this.props.movie.id}`)}>Edit</EditButton>
+      <DeleteButton onClick = {this.deleteMovie}>Delete</DeleteButton>
       </div>
     );
   }

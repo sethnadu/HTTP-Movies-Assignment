@@ -21,7 +21,7 @@ const App = () => {
           return <Movie {...props} addToSavedList={addToSavedList} />;
         }}
       />
-    </>
+    </>  
   );
 };
 

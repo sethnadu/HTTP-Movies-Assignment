@@ -1,6 +1,9 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 import Styled from "styled-components";
+import Movie from "./Movie";
+
+import uuid from "uuid"
 
 
 const FormDiv = Styled.div `
@@ -52,51 +55,59 @@ const InitialMovie = {
     title: '',
     director: "",
     metascore: '',
-    stars: []
+    stars: [''],
 
 }
 
-const UpdateMovie = props => {
-    const [update, setUpdate] = useState(InitialMovie)
+const AddMovie = props => {
+    const [addMovie, setAddMovie] = useState(InitialMovie)
     console.log(props)
-    useEffect(() => {
-        if (props.match.params.id) setUpdate(props.movie);
-    }, [props.movie, props.match.params.id])
 
     const handleChange = event => {
-        setUpdate({...update, [event.target.name]: event.target.value});
+        setAddMovie({...addMovie, [event.target.name]: event.target.value});
     };
+
 
     const handleSubmit = event => {
         event.preventDefault();
         axios
-            .put(`http://localhost:5000/api/movies/${update.id}`, update)
+            .post(`http://localhost:5000/api/movies/`, addMovie)
             .then(res => {
+                console.log(res)
+                setAddMovie(InitialMovie)
                 props.history.push("/")
-                setUpdate(InitialMovie)
                 })
             .catch(error => console.log(error))
     }
 
     const handleStarsChange = (index, event) => {
-        const newStars = [...props.movie.stars]
+        const newStars = [...addMovie.stars]
         newStars[index] = event.target.value
-        setUpdate( {...update, stars: newStars})
+        setAddMovie( {...addMovie, stars: newStars})
     }
+
+    const AddActors = (event) => {
+        event.preventDefault()
+        setAddMovie({...addMovie, stars: [...addMovie.stars, '']})
+    }
+  
+
 
     return (
         <FormDiv>
-            <h2>Update Movie</h2>
+            <h2>Add Movie</h2>
             <Form onSubmit = {handleSubmit}>
-                <InputText type = "text" name = "title" placeholder="Title" onChange = {handleChange} value ={update.title} />
-                <InputText type = "text" name = "director" placeholder="Director" onChange = {handleChange} value ={update.director}/>
-                <InputText type = "text" name = "metascore" placeholder="Metascore" onChange = {handleChange} value ={update.metascore}/>
-                {update.stars.map((star, index) => <TextArea key ={index} type = "text" name = "stars" placeholder="Stars" onChange = {event => handleStarsChange(index, event)} value ={update.stars[index]}/> )}
+                <InputText type = "text" name = "title" placeholder="Title" onChange = {handleChange} value ={addMovie.title} />
+                <InputText type = "text" name = "director" placeholder="Director" onChange = {handleChange} value ={addMovie.director}/>
+                <InputText type = "text" name = "metascore" placeholder="Metascore" onChange = {handleChange} value ={addMovie.metascore}/>
+                {addMovie.stars.map((star, index) => <TextArea key ={uuid()} type = "text" name = "stars" placeholder="Stars" onChange = {event => handleStarsChange(index, event)} value ={addMovie.stars[index]}/> )}
+                <Button onClick = {AddActors}>Add Actor</Button>
                 <Button type="submit">Update</Button>
+
 
             </Form>
         </FormDiv>
     )
 }
 
-export default UpdateMovie
+export default AddMovie

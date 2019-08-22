@@ -19,10 +19,16 @@ export default class MovieList extends Component {
       .catch(err => console.log(err.response));
   }
 
+  addMovie = event => {
+    event.preventDefault();
+    this.props.history.push("/add-movie")
+  }
+
   render() {
     console.log(this.state.movies)
     return (
       <div className="movie-list">
+        <button onClick = {(this.addMovie)}>Add Movie</button>
         {this.state.movies.map(movie => (
           <MovieDetails key={movie.id} movie={movie} />
         ))}

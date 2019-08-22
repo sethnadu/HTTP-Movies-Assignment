@@ -4,11 +4,13 @@ import MovieCard from "./MovieCard";
 export default class Movie extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      movie: null
-    };
+    // this.state = {
+    //   movie: null
+    // };
+    console.log(props)
   }
-
+ 
+  
   componentDidMount() {
     this.fetchMovie(this.props.match.params.id);
   }
@@ -19,29 +21,37 @@ export default class Movie extends React.Component {
     }
   }
 
+  
   fetchMovie = id => {
+    
     axios
       .get(`http://localhost:5000/api/movies/${id}`)
-      .then(res => this.setState({ movie: res.data }))
+      .then(res => {
+        console.log(res.data) 
+        this.props.setMovie(res.data)
+      })
       .catch(err => console.log(err.response));
   };
 
   saveMovie = () => {
     const addToSavedList = this.props.addToSavedList;
-    addToSavedList(this.state.movie);
+    addToSavedList(this.props.movie);
   };
 
+
   render() {
-    if (!this.state.movie) {
+    console.log(this.props.movie)
+    if (!this.props.movie) {
       return <div>Loading movie information...</div>;
     }
 
     return (
       <div className="save-wrapper">
-        <MovieCard movie={this.state.movie} />
+        <MovieCard movie={this.props.movie} />
         <div className="save-button" onClick={this.saveMovie}>
           Save
         </div>
+      <button onClick ={() => this.props.history.push(`/update-movie/${this.props.movie.id}`)}>Edit</button>
       </div>
     );
   }

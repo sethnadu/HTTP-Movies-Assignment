@@ -86,6 +86,11 @@ const UpdateMovie = props => {
         setUpdate( {...update, stars: newStars})
     }
 
+    const AddActors = (event) => {
+        event.preventDefault()
+        setUpdate({...update, stars: [...update.stars, '']})
+    }
+
     return (
         <FormDiv>
             <h2>Update Movie</h2>
@@ -94,6 +99,7 @@ const UpdateMovie = props => {
                 <InputText type = "text" name = "director" placeholder="Director" onChange = {handleChange} value ={update.director}/>
                 <InputText type = "text" name = "metascore" placeholder="Metascore" onChange = {handleChange} value ={update.metascore}/>
                 {update.stars.map((star, index) => <TextArea key ={index} type = "text" name = "stars" placeholder="Stars" onChange = {event => handleStarsChange(index, event)} value ={update.stars[index]}/> )}
+                <Button onClick = {AddActors}>Add Actor</Button>
                 <Button type="submit">Update</Button>
 
             </Form>

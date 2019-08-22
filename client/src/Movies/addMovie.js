@@ -2,9 +2,7 @@ import React, {useState, useEffect} from "react";
 import axios from "axios";
 import Styled from "styled-components";
 import Movie from "./Movie";
-
-import uuid from "uuid"
-
+import * as Yup from "yup";
 
 const FormDiv = Styled.div `
     display: flex;
@@ -59,7 +57,7 @@ const InitialMovie = {
 
 }
 
-const AddMovie = props => {
+const AddMovie = (props, {errors, touched}) => {
     const [addMovie, setAddMovie] = useState(InitialMovie)
     console.log(props)
 
@@ -79,6 +77,7 @@ const AddMovie = props => {
                 })
             .catch(error => console.log(error))
     }
+  
 
     const handleStarsChange = (index, event) => {
         const newStars = [...addMovie.stars]
@@ -91,7 +90,7 @@ const AddMovie = props => {
         setAddMovie({...addMovie, stars: [...addMovie.stars, '']})
     }
   
-
+    
 
     return (
         <FormDiv>
@@ -100,7 +99,7 @@ const AddMovie = props => {
                 <InputText type = "text" name = "title" placeholder="Title" onChange = {handleChange} value ={addMovie.title} />
                 <InputText type = "text" name = "director" placeholder="Director" onChange = {handleChange} value ={addMovie.director}/>
                 <InputText type = "text" name = "metascore" placeholder="Metascore" onChange = {handleChange} value ={addMovie.metascore}/>
-                {addMovie.stars.map((star, index) => <TextArea key ={uuid()} type = "text" name = "stars" placeholder="Stars" onChange = {event => handleStarsChange(index, event)} value ={addMovie.stars[index]}/> )}
+                {addMovie.stars.map((star, index) => <TextArea key ={index} type = "text" name = "stars" placeholder="Stars" onChange = {event => handleStarsChange(index, event)} value ={addMovie.stars[index]}/> )}
                 <Button onClick = {AddActors}>Add Actor</Button>
                 <Button type="submit">Update</Button>
 
